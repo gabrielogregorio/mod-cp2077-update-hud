@@ -11,7 +11,7 @@ After
 
 ## How use?
 
-1. Install mod [https://www.nexusmods.com/cyberpunk2077/mods/5266](https://www.nexusmods.com/cyberpunk2077/mods/5266)
+1. Install mod [Material and Texture Override](https://www.nexusmods.com/cyberpunk2077/mods/5266)
 2. Extract file `Update Hud Icon.zip` in your game folder, example, my game folder is:
 
 ```D:\Cyberpunk2077\REDprelauncher.exe```
