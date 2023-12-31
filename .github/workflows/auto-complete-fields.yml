@@ -22,13 +22,6 @@ jobs:
           "${{ github.event.pull_request.commits_url }}")
           echo "::set-output name=pr_commits::$pr_commits"
 
-      - name: get current version
-        id: get-version
-        run: |
-          VERSION=$(node getVersion.js)
-          echo "Current version: $VERSION"
-          echo "TAG_VERSION=v$VERSION" >> $GITHUB_ENV
-
       - name: assign user and add labels
         uses: actions/github-script@v5
         with:
@@ -96,7 +89,7 @@ jobs:
             });
 
             // update pr title
-            const currentPackageVersion = process.env.TAG_VERSION;
+            const currentPackageVersion = "TAG_VERSION";
             const currentTitle = context.payload.pull_request.title;
 
             let newTitle = `Release ${currentPackageVersion} - ${currentTitle}`
