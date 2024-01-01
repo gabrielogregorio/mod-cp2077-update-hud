@@ -15,6 +15,13 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v2
 
+      - name: get current version
+        id: get-version
+        run: |
+          VERSION=$( node -p "\/version=\"([\\d\\.]{1,})\"\/.exec(require('fs').readFileSync('./install_log.xml').toString())[1]")
+          echo "Current version: $VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: get pr commits
         id: pr_commits
         run: |

@@ -4,11 +4,12 @@ on:
   pull_request:
     types:
       - closed
+      - edited
       - opened
 
 jobs:
   create-release:
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -39,14 +40,14 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
           echo "TAG_VERSION=$TAG_VERSION" >> $GITHUB_ENV
 
-      - name: create release and tag
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.TAG_VERSION }}
-          release_name: Release ${{ env.TAG_VERSION }}
-          body: |
-            ${{ env.PR_CONTENT }}
-          draft: false
-          prerelease: false
+      # - name: create release and tag
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ env.TAG_VERSION }}
+      #     release_name: Release ${{ env.TAG_VERSION }}
+      #     body: |
+      #       ${{ env.PR_CONTENT }}
+      #     draft: false
+      #     prerelease: false
