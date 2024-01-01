@@ -7,7 +7,7 @@ before
 
 
 After
-![docs/after.png](docs/after.png)
+![docs/after.png](docs/afterv1.1.png)
 
 ## How use?
 
