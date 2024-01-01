@@ -15,6 +15,13 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v2
 
+      - name: get current version
+        id: get-version
+        run: |
+          VERSION=$( node -p "require('fs').readFileSync('./install_log.xml').toString().split('version=')[1].split(' encoding')[0].slice(1, -1)")
+          echo "Current version: $VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: get pr commits
         id: pr_commits
         run: |
@@ -89,7 +96,7 @@ jobs:
             });
 
             // update pr title
-            const currentPackageVersion = "TAG_VERSION";
+            const currentPackageVersion = process.env.TAG_VERSION;
             const currentTitle = context.payload.pull_request.title;
 
             let newTitle = `Release ${currentPackageVersion} - ${currentTitle}`
