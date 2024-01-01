@@ -4,12 +4,10 @@ on:
   pull_request:
     types:
       - closed
-      - edited
-      - opened
 
 jobs:
   create-release:
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -25,7 +23,7 @@ jobs:
       - name: get current version
         id: get-version
         run: |
-          VERSION=$( node -p "\/version=\"([\\d\\.]{1,})\"\/.exec(require('fs').readFileSync('./install_log.xml').toString())[1]")
+          VERSION=$(node -p "require('fs').readFileSync('./install_log.xml').toString().split('version=')[1].split(' encoding')[0].slice(1, -1)")
           echo "Current version: $VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
@@ -40,14 +38,14 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
           echo "TAG_VERSION=$TAG_VERSION" >> $GITHUB_ENV
 
-      # - name: create release and tag
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: ${{ env.TAG_VERSION }}
-      #     release_name: Release ${{ env.TAG_VERSION }}
-      #     body: |
-      #       ${{ env.PR_CONTENT }}
-      #     draft: false
-      #     prerelease: false
+      - name: create release and tag
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.TAG_VERSION }}
+          release_name: Release ${{ env.TAG_VERSION }}
+          body: |
+            ${{ env.PR_CONTENT }}
+          draft: false
+          prerelease: false

@@ -96,7 +96,7 @@ jobs:
             });
 
             // update pr title
-            const currentPackageVersion = "TAG_VERSION";
+            const currentPackageVersion = process.env.TAG_VERSION;
             const currentTitle = context.payload.pull_request.title;
 
             let newTitle = `Release ${currentPackageVersion} - ${currentTitle}`
